@@ -57,8 +57,9 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 	if(value) {
 //		email is not present in the database so we can let him to signup
 		studentDao.signupStudent(student);
-		PrintWriter printWriter=resp.getWriter();
-		printWriter.print("yes signedUpsuccessfully");
+		req.setAttribute("message", "SignedUpSuccessfullyPleaseLogin");
+		RequestDispatcher dispatcher=req.getRequestDispatcher("login.jsp");
+		dispatcher.forward(req, resp);
 	}else {
 //		email already present means that email is already taken by other student
 		req.setAttribute("message", "Sorry EMail Already exist please give different email");
