@@ -28,5 +28,33 @@ public class StudentDao {
 		entityTransaction.commit();
 		
 	}
+
+	public void deleteStudentById(int id) {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("pooji");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		Student student=entityManager.find(Student.class, id);
+		EntityTransaction entityTransaction=entityManager.getTransaction();
+		entityTransaction.begin();
+		entityManager.remove(student);
+		entityTransaction.commit();
+		
+	}
+
+	public Student getStudentById(int id) {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("pooji");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		Student student=entityManager.find(Student.class, id);
+		return student;
+	}
+
+	public void UpdateStudent(Student student) {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("pooji");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		EntityTransaction entityTransaction=entityManager.getTransaction();
+		entityTransaction.begin();
+		entityManager.merge(student);
+		entityTransaction.commit();
+		
+	}
 	
 }

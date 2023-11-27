@@ -42,8 +42,10 @@ public class LoginServlet extends HttpServlet {
 			
 			if(password.equals(studentPassword)) {
 //				login success
-				PrintWriter printWriter=resp.getWriter();
-				printWriter.print("LOGIN SUCCESSS");
+				List<Student> list=studentDao.getAllStudents();
+				req.setAttribute("list", list);
+				RequestDispatcher dispatcher=req.getRequestDispatcher("display.jsp");
+				dispatcher.forward(req, resp);
 			}else {
 //				password doesnot matches
 				req.setAttribute("message", "Invalid Password");
