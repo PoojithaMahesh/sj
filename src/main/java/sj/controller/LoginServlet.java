@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,12 +29,14 @@ public class LoginServlet extends HttpServlet {
 		List<Student> students=studentDao.getAllStudents();
 		boolean value=false;
 		String studentPassword=null;
+		String studentWhoLoggedIn=null;
 		
 		for(Student student:students) {
 			if(email.equals(student.getEmail())) {
 //				email is present
 				value=true;
 				studentPassword=student.getPassword();
+				studentWhoLoggedIn=student.getName();
 				break;
 			}
 		}
@@ -42,6 +45,8 @@ public class LoginServlet extends HttpServlet {
 			
 			if(password.equals(studentPassword)) {
 //				login success
+				Cookie cookie=new Cookie("namewhologgein", studentWhoLoggedIn);
+				resp.addCookie(cookie);
 				List<Student> list=studentDao.getAllStudents();
 				req.setAttribute("list", list);
 				RequestDispatcher dispatcher=req.getRequestDispatcher("display.jsp");
