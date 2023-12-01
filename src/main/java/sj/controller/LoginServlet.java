@@ -11,6 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import sj.dao.StudentDao;
 import sj.dto.Student;
@@ -36,6 +37,7 @@ public class LoginServlet extends HttpServlet {
 //				email is present
 				value=true;
 				studentPassword=student.getPassword();
+//				cookies concept
 				studentWhoLoggedIn=student.getName();
 				break;
 			}
@@ -45,8 +47,16 @@ public class LoginServlet extends HttpServlet {
 			
 			if(password.equals(studentPassword)) {
 //				login success
+				
+				
 				Cookie cookie=new Cookie("namewhologgein", studentWhoLoggedIn);
 				resp.addCookie(cookie);
+				
+				
+				HttpSession httpSession=req.getSession();
+				httpSession.setAttribute("name", studentWhoLoggedIn);
+				
+				
 				List<Student> list=studentDao.getAllStudents();
 				req.setAttribute("list", list);
 				RequestDispatcher dispatcher=req.getRequestDispatcher("display.jsp");

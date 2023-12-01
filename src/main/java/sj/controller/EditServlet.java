@@ -48,6 +48,15 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 	StudentDao dao=new StudentDao();
 	dao.UpdateStudent(student);
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	Cookie[] cookies=req.getCookies();
 	String nameWhoChangedTheDetails=null;
 	for(Cookie cookie:cookies) {
@@ -55,15 +64,18 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 			nameWhoChangedTheDetails=cookie.getValue();
 		}
 	}
-//	PrintWriter printWriter=resp.getWriter();
-//	printWriter.print(nameWhoChangedTheDetails);
-//	
-	
+	PrintWriter printWriter=resp.getWriter();
+	printWriter.print(nameWhoChangedTheDetails);
+	req.setAttribute("studentNameWhoChangedTheDetails", nameWhoChangedTheDetails);
 	req.setAttribute("list", dao.getAllStudents());
-	req.setAttribute("name", nameWhoChangedTheDetails);
 	RequestDispatcher dispatcher=req.getRequestDispatcher("display.jsp");
 	dispatcher.forward(req, resp);
 	
+//	req.setAttribute("list", dao.getAllStudents());
+//	req.setAttribute("studentwhologgedInandChangedthedetails", nameWhoChangedTheDetails);
+//	RequestDispatcher dispatcher=req.getRequestDispatcher("display.jsp");
+//	dispatcher.forward(req, resp);
+//	
 	
 }
 }
